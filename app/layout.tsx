@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
-import "./globals.css";
 
-const poppins = Poppins({
-  weight : '400'
+import { Montserrat } from "next/font/google";
+import "./globals.css";
+import { UserProvider } from "./components/hooks/userContext/UserProvider";
+import { SocketProvider } from "./components/hooks/userContext/SocketProvider";
+
+const font = Montserrat({
+  weight: '400'
 });
 
 
@@ -15,9 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased`}
+        className={`${font.className}`}
       >
-        {children}
+        <UserProvider>
+          <SocketProvider>
+            {children}
+          </SocketProvider>
+        </UserProvider>
       </body>
     </html>
   );

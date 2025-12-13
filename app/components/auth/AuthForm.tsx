@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react"
 import InputBox from "../inputBox/InputBox"
 import { useRouter } from "next/navigation"
+import { useUser } from "../hooks/userContext/UserProvider"
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL
 console.log(base_url)
@@ -10,6 +11,7 @@ console.log(base_url)
 const AuthForm = () => {
   const [state, setState] = useState<'SignIn' | 'SignUp'>('SignIn')
   const router = useRouter()
+  const {setUser} = useUser()
 
   useEffect(() => {
     const token = window.localStorage.getItem("chat-user");
@@ -56,6 +58,7 @@ const AuthForm = () => {
         })
 
         const data = await res.json()
+        
 
         if (!res.ok) {
           alert(data.message || "Login failed")
@@ -63,7 +66,8 @@ const AuthForm = () => {
         }
 
         // Save token
-        localStorage.setItem("chat-user", data.token)
+        setUser(data)
+        localStorage.setItem("chat-user", JSON.stringify(data))
         router.replace("/")
       } catch (error) {
         console.log(error)
