@@ -1,7 +1,7 @@
 'use client';
 
 import { UserInterface } from '@/public/interfaces/interfaces';
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 /* ================= TYPES ================= */
@@ -18,6 +18,8 @@ interface OnlineUsersByGroup {
 interface SocketContextType {
   socket: Socket | null;
   onlineUsers: OnlineUsersByGroup;
+  setOnlineUsers: React.Dispatch<React.SetStateAction<OnlineUsersByGroup>>;
+  
 }
 
 /* ================= CONTEXT ================= */
@@ -25,6 +27,8 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType>({
   socket: null,
   onlineUsers: {},
+  setOnlineUsers: ()=>{}
+
 });
 
 /* ================= PROVIDER ================= */
@@ -45,7 +49,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   /* ---------- Socket connection ---------- */
   useEffect(() => {
     if (!user) return;
-
+// 
     const socketInstance = io(process.env.NEXT_PUBLIC_BASE_URL!, {
       auth: { user: JSON.stringify(user) },
     });
@@ -58,8 +62,6 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       groupId: string;
       users: OnlineUser[];
     }) => {
-      console.log('socket data received:', data);
-
       setOnlineUsers(prev => ({
         ...prev,
         [data.groupId]: data.users,
@@ -79,7 +81,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   
 
   return (
-    <SocketContext.Provider value={{ socket, onlineUsers }}>
+    <SocketContext.Provider value={{socket, onlineUsers, setOnlineUsers} }>
       {children}
     </SocketContext.Provider>
   );
