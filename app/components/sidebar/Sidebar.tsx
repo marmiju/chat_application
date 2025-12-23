@@ -27,7 +27,6 @@ const Sidebar = ({ onSelectGroup, grp }: { onSelectGroup: (group: GroupInterface
     };
 
     const deleteGroup = async (groupId: string) => {
-        alert("are you sure to delete this group?")
         console.log("deleting group:", groupId);
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/groups/${groupId}/remove`, {
             method: 'DELETE',
@@ -37,7 +36,7 @@ const Sidebar = ({ onSelectGroup, grp }: { onSelectGroup: (group: GroupInterface
         })
         console.log("response:", res);
         if (!res.ok) {
-            toast.error("failed to delete group")
+            toast.error("failed! only Admin can do")
             return
         }
         const result = await res.json()
@@ -106,7 +105,7 @@ const Sidebar = ({ onSelectGroup, grp }: { onSelectGroup: (group: GroupInterface
         console.log(result._id)
         setGroups(prev => [...prev, result])
         setOpenModal(false)
-        socket?.emit('create_group', { groupId: result._id }, (res) => {
+        socket?.emit('create_group', { groupId: result._id }, (res:any) => {
             console.log(res.message);
             toast.success(res.message)
         });

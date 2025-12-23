@@ -211,7 +211,7 @@ const ChatMessages = ({ group }: { group: GroupInterface }) => {
 
 
         {/* messages */}
-        <div className="flex-1 flex flex-col-reverse p-4 overflow-y-auto space-y-2">
+        <div className="flex-1 flex flex-col-reverse p-4 pb-10 overflow-x-auto  space-y-4">
           {messages.length === 0 ? (
             <p className="text-gray-500 text-center">No messages yet</p>
           ) : (
@@ -254,7 +254,7 @@ const ChatMessages = ({ group }: { group: GroupInterface }) => {
         </div>
 
         <div className="p-4 space-y-2">
-          <p className="bg-cyan-300 text-white p-2 text-sm text-center font-semibold">
+          <p className="text-primary p-2 text-sm text-center font-semibold">
             {group.description}
           </p>
 

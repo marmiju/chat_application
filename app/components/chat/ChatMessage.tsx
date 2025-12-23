@@ -14,8 +14,8 @@ const ChatMessage = ({ message }: { message: ChatMessageinterface }) => {
           <div className="text-center text-sm text-gray-500 my-2">
             {message.content}
           </div>
-        ) : <ul className={`flex py-2 ${isMe ? 'justify-end' : 'justify-start'} mb-4`}>
-          <li className={`flex justify-center items-start space-x-1
+        ) : <ul className={`flex   ${isMe ? 'justify-end' : 'justify-start'} `}>
+          <li className={`flex justify-center items-start space-x-1 mb-2
         ${isMe ? 'flex-row-reverse' : ' flex-row'}`}>
             <div className=' text-gray-400 text-2xl rounded-full' >
               <RiAccountCircleFill />
@@ -29,10 +29,10 @@ const ChatMessage = ({ message }: { message: ChatMessageinterface }) => {
               }>{message.content}</p>
               {
                 isMe && <>
-                  <p className=' absolute bottom-[-20px] right-0'>
+                  <p className=' absolute bottom-[-18px] right-0'>
                     {message.deliveries.filter(mes=> mes.user._id !== user._id)
                       .map(del => (
-                        <span className={`text-[12px] px-1 rounded-full border ${del.status === 'sent' ? 'border-black' : del.status === 'delivered' ? 'border-green-600' : 'border-red-600'}`} key={del.user._id}>{del.user.username}</span>
+                        <span className={`text-[12px] px-1 rounded-full  ${del.status === 'sent' ? 'text-gray-400' : del.status === 'delivered' ? 'text-yellow-600' : 'text-green-600'}`} key={del.user._id}>{del.user.username}</span>
                       ))}
                   </p>
 
