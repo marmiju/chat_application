@@ -1,9 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar';
 import { GroupInterface } from '@/public/interfaces/interfaces';
 import ChatMessages from './components/chat/ChatMessages';
-import { io } from 'socket.io-client';
+
 
 const Page = () => {
   const [selectedGroup, setSelectedGroup] = useState<GroupInterface | null>(null);
@@ -11,13 +11,6 @@ const Page = () => {
   const handleSelectGroup = (group: GroupInterface) => {
     setSelectedGroup(group);
   };
-  useEffect(() => {
-    const str = localStorage.getItem("chat-user");
-    const user = JSON.parse(str!)
-    io(process.env.NEXT_PUBLIC_BASE_URL!, {
-      auth: { user: JSON.stringify(user) }
-    })
-  }, []);
 
   return (
     <div className="flex h-screen">
